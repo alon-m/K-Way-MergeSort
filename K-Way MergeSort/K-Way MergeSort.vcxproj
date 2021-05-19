@@ -140,7 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Heap.cpp" />
+    <ClCompile Include="IO.cpp" />
+    <ClCompile Include="KWayMergeSort.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="QuickSort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Heap.h" />

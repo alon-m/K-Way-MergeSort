@@ -1,181 +1,56 @@
 #pragma once
 #include <stdexcept>
-using namespace std;
 
 class Heap
 {
 public:
 
-	Heap(unsigned int i_Amount = 1)
-	{
-		m_ElementCount = 0;
-		m_ContainerCapacity = i_Amount;
-		m_Container = new int[i_Amount];
-	}
+	explicit Heap(int i_Amount = 1);
 
-	int Count()
-	{
-		return m_ElementCount;
-	}
+	int Count() const;
 
-	int Capacity()
-	{
-		return m_ContainerCapacity;
-	}
+	int Capacity() const;
 
-	int peek()
-	{
-		if (IsEmpty())
-		{
-			throw new length_error("Heap is empty");
-		}
+	int Peek() const;
 
-		return m_Container[0];
-	}
+	int Pull();
 
-	int Pull()
-	{
-		if (IsEmpty())
-		{
-			throw new length_error("Heap is empty");
-		}
+	void add(int i_ItemToAdd);
 
-		int itemToReturn = m_Container[0];
-		m_Container[0] = m_Container[m_ElementCount - 1];
-		m_ElementCount--;
-		heapifyDown();
-
-		return itemToReturn;
-	}
-
-	void add(int i_ItemToAdd)
-	{
-		resize();
-		m_Container[Count()] = i_ItemToAdd;
-		heapifyUp();
-	}
-
-	bool IsEmpty()
-	{
-		return Count() == 0;
-	}
+	bool IsEmpty() const;
 
 private:
 
-	unsigned int m_ContainerCapacity;
-	unsigned int m_ElementCount;
+	int m_ContainerCapacity;
+	int m_ElementCount;
 	int* m_Container;
 
-	int getLeftChildIndex(int i_ParentIndex)
-	{
-		return 2 * i_ParentIndex + 1;
-	}
+	int getLeftChildIndex(int i_ParentIndex) const;
 
-	int getRightChildIndex(int i_ParentIndex)
-	{
-		return 2 * i_ParentIndex + 2;
-	}
+	int getRightChildIndex(int i_ParentIndex) const;
 
-	int getParentIndex(int i_ChildIndex)
-	{
-		return (i_ChildIndex - 1) / 2;
-	}
+	int getParentIndex(int i_ChildIndex) const;
 
-	bool hasLeftChild(int i_ParentIndex)
-	{
-		return (getLeftChildIndex(i_ParentIndex) < Count());
-	}
+	bool hasLeftChild(int i_ParentIndex) const;
 
-	bool hasRightChild(int i_ParentIndex)
-	{
-		return (getRightChildIndex(i_ParentIndex) < Count());
-	}
+	bool hasRightChild(int i_ParentIndex) const;
 
-	bool hasParent(int i_ChildIndex)
-	{
-		return (getParentIndex(i_ChildIndex) >= 0);
-	}
-
-	int getLeftChild(int i_ParentIndex)
-	{
-		return m_Container[getLeftChildIndex(i_ParentIndex)];
-	}
-
-	int getRightChild(int i_ParentIndex)
-	{
-		return m_Container[getRightChildIndex(i_ParentIndex)];
-	}
-
-	int getParent(int i_ChildIndex)
-	{
-		return m_Container[getParentIndex(i_ChildIndex)];
-	}
-
-	void swap(int i_Index1, int i_Index2)
-	{
-		int temp = m_Container[i_Index1];
-		m_Container[i_Index1] = m_Container[i_Index2];
-		m_Container[i_Index2] = temp;
-	}
+	bool hasParent(int i_ChildIndex) const;
 	
-	void resize()
-	{
-		if (Count() == Capacity())
-		{
-			m_Container = copyContainerAndDoubleCapacity();
-		}
-	}
+	int getLeftChild(int i_ParentIndex) const;
 
-	int* copyContainerAndDoubleCapacity()
-	{
-		int* result = new int[m_ContainerCapacity * 2];
+	int getRightChild(int i_ParentIndex) const;
 
-		for (int i = 0; i < m_ContainerCapacity; i++)
-		{
-			result[i] = m_Container[i];
-		}
+	int getParent(int i_ChildIndex) const;
 
-		m_ContainerCapacity *= 2;
-		
-		return result;
-	}
+	void swap(int i_Index1, int i_Index2);
 
-	void heapifyDown()
-	{
-		int index = 0;
+	void resize();
 
-		while (hasLeftChild(index))
-		{
-			int smallerChildIndex = getLeftChildIndex(index);
+	int* copyContainerAndDoubleCapacity();
 
-			if (hasRightChild(index) && getRightChild(index) < getLeftChild(index))
-			{
-				smallerChildIndex = getRightChildIndex(index);
-			}
+	void fixHeapDown();
 
-			if (m_Container[index] < m_Container[smallerChildIndex])
-			{
-				break;
-			}
-			else
-			{
-				swap(index, smallerChildIndex);
-			}
-
-			index = smallerChildIndex;
-		}
-	}
-
-	void heapifyUp()
-	{
-		int index = Count() - 1;
-
-		while (hasParent(index) && getParent(index) > m_Container[index])
-		{
-			swap(getParentIndex(index), index);
-			index = getParentIndex(index);
-		}
-	}
-
+	void fixHeapUp();
+	
 };
-

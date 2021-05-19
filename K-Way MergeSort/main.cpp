@@ -18,7 +18,7 @@ void main()
 	}
 	catch (const std::exception& e)
 	{
-		IO::PrintMsgToConsole("unknown error occured");
+		IO::PrintMsgToConsole("unknown error occurred");
 		exit(0);
 	}
 }

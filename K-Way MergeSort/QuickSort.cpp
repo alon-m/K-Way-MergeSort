@@ -8,6 +8,7 @@ void QuickSort::Sort(int i_Arr[], int i_Low, int i_High)
 
         Sort(i_Arr, i_Low, pivotIndex - 1);
         Sort(i_Arr, pivotIndex + 1, i_High);
+
     }
 }
 

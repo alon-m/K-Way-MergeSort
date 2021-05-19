@@ -1,27 +1,27 @@
-#include "Heap.h"
+#include "MinHeap.h"
 
 /*
  * Public Methods
  */
 
-Heap::Heap(int i_Amount)
+MinHeap::MinHeap(int i_Amount)
 {
 	m_ElementCount = 0;
 	m_ContainerCapacity = i_Amount;
 	m_Container = new int[i_Amount];
 }
 
-int Heap::Count() const
+int MinHeap::Count() const
 {
 	return m_ElementCount;
 }
 
-int Heap::Capacity() const
+int MinHeap::Capacity() const
 {
 	return m_ContainerCapacity;
 }
 
-int Heap::Peek() const
+int MinHeap::Min() const
 {
 	if (IsEmpty())
 	{
@@ -31,7 +31,7 @@ int Heap::Peek() const
 	return m_Container[0];
 }
 
-int Heap::Pull()
+int MinHeap::DeleteMin()
 {
 	if (IsEmpty())
 	{
@@ -46,75 +46,90 @@ int Heap::Pull()
 	return itemToReturn;
 }
 
-void Heap::add(int i_ItemToAdd)
+void MinHeap::Insert(int i_ItemToAdd)
 {
 	resize();
 	m_Container[Count()] = i_ItemToAdd;
 	fixHeapUp();
 }
 
-bool Heap::IsEmpty() const
+bool MinHeap::IsEmpty() const
 {
 	return Count() == 0;
+}
+
+void MinHeap::BuildHeap(int* i_Arr, int i_Size)
+{
+	if (i_Arr)
+	{
+		for (int i = 0; i < i_Size; i++)
+		{
+			Insert(i_Arr[i]);
+		}
+	}
+	else
+	{
+		throw std::exception("input array pointer is null");
+	}
 }
 
 /*
  * Private Methods
  */
 
-int Heap::getLeftChildIndex(int i_ParentIndex) const
+int MinHeap::getLeftChildIndex(int i_ParentIndex) const
 {
 	return 2 * i_ParentIndex + 1;
 }
 
-int Heap::getRightChildIndex(int i_ParentIndex) const
+int MinHeap::getRightChildIndex(int i_ParentIndex) const
 {
 	return 2 * i_ParentIndex + 2;
 }
 
-int Heap::getParentIndex(int i_ChildIndex) const
+int MinHeap::getParentIndex(int i_ChildIndex) const
 {
 	return (i_ChildIndex - 1) / 2;
 }
 
-bool Heap::hasLeftChild(int i_ParentIndex) const
+bool MinHeap::hasLeftChild(int i_ParentIndex) const
 {
 	return (getLeftChildIndex(i_ParentIndex) < Count());
 }
 
-bool Heap::hasRightChild(int i_ParentIndex) const
+bool MinHeap::hasRightChild(int i_ParentIndex) const
 {
 	return (getRightChildIndex(i_ParentIndex) < Count());
 }
 
-bool Heap::hasParent(int i_ChildIndex) const
+bool MinHeap::hasParent(int i_ChildIndex) const
 {
 	return (getParentIndex(i_ChildIndex) >= 0);
 }
 
-int Heap::getLeftChild(int i_ParentIndex) const
+int MinHeap::getLeftChild(int i_ParentIndex) const
 {
 	return m_Container[getLeftChildIndex(i_ParentIndex)];
 }
 
-int Heap::getRightChild(int i_ParentIndex) const
+int MinHeap::getRightChild(int i_ParentIndex) const
 {
 	return m_Container[getRightChildIndex(i_ParentIndex)];
 }
 
-int Heap::getParent(int i_ChildIndex) const
+int MinHeap::getParent(int i_ChildIndex) const
 {
 	return m_Container[getParentIndex(i_ChildIndex)];
 }
 
-void Heap::swap(int i_Index1, int i_Index2)
+void MinHeap::swap(int i_Index1, int i_Index2)
 {
 	int temp = m_Container[i_Index1];
 	m_Container[i_Index1] = m_Container[i_Index2];
 	m_Container[i_Index2] = temp;
 }
 
-void Heap::resize()
+void MinHeap::resize()
 {
 	if (Count() == Capacity())
 	{
@@ -122,7 +137,7 @@ void Heap::resize()
 	}
 }
 
-int* Heap::copyContainerAndDoubleCapacity()
+int* MinHeap::copyContainerAndDoubleCapacity()
 {
 	int* result = new int[m_ContainerCapacity * 2];
 
@@ -136,7 +151,7 @@ int* Heap::copyContainerAndDoubleCapacity()
 	return result;
 }
 
-void Heap::fixHeapDown()
+void MinHeap::fixHeapDown()
 {
 	int index = 0;
 
@@ -159,7 +174,7 @@ void Heap::fixHeapDown()
 	}
 }
 
-void Heap::fixHeapUp()
+void MinHeap::fixHeapUp()
 {
 	int index = Count() - 1;
 

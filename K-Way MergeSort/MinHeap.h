@@ -1,23 +1,31 @@
 #pragma once
 #include <stdexcept>
 
-class Heap
+class MinHeap
 {
 public:
 
-	explicit Heap(int i_Amount = 1);
+	explicit MinHeap(int i_Amount = 1);
+
+	~MinHeap()
+	{
+		delete[] m_Container;
+	}
 
 	int Count() const;
 
 	int Capacity() const;
 
-	int Peek() const;
+	int Min() const;
 
-	int Pull();
+	int DeleteMin();
 
-	void add(int i_ItemToAdd);
+	void Insert(int i_ItemToAdd);
 
 	bool IsEmpty() const;
+
+	void BuildHeap(int* i_Arr, int i_Size);
+	
 
 private:
 

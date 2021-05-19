@@ -3,7 +3,7 @@
 class Heap
 {
 private:
-	int value;
+
 public:
 
 

@@ -4,6 +4,7 @@ void main()
 {
 	try
 	{
+		int a = 2;
 		int arraySize = IO::GetIntInputFromConsole("Enter amount of numbers");
 		int kValue = IO::GetIntInputFromConsole("Enter your k value");
 		string inputFilePath = IO::GetStringInput("Enter input file name");

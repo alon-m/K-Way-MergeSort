@@ -1,13 +1,13 @@
 #include "QuickSort.h"
 
-void QuickSort::Sort(int i_Arr[], int i_Low, int i_High)
+void QuickSort::QSort(int* i_Arr, int i_Low, int i_High)
 {
     if (i_Low < i_High)
     {
         int pivotIndex = Partition(i_Arr, i_Low, i_High);
 
-        Sort(i_Arr, i_Low, pivotIndex - 1);
-        Sort(i_Arr, pivotIndex + 1, i_High);
+        QuickSort::QSort(i_Arr, i_Low, pivotIndex - 1);
+        QuickSort::QSort(i_Arr, pivotIndex + 1, i_High);
 
     }
 }
@@ -29,11 +29,13 @@ int QuickSort::Partition(int i_Arr[], int i_Low, int i_High)
         if (i_Arr[j] <= pivot)
         {
             i++;
-            Swap(&i_Arr[i], &i_Arr[j]);
+            QuickSort::Swap(&i_Arr[i], &i_Arr[j]);
         }
     }
 
-    Swap(&i_Arr[i + 1], &i_Arr[i_High]);
+    QuickSort::Swap(&i_Arr[i + 1], &i_Arr[i_High]);
 
     return (i + 1);
 }
+
+

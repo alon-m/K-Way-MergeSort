@@ -2,9 +2,12 @@
 
 int* KWayMergeSort::Sort(int* i_IntArray, int i_Size, int i_KValue)
 {
+	int* resultArr;
+
 	if (i_Size < i_KValue)
 	{
-		QuickSort::Sort(i_IntArray, 0, i_Size - 1);
+		QuickSort::QSort(i_IntArray, 0, i_Size - 1);
+		resultArr = i_IntArray;
 	}
 	else
 	{
@@ -16,10 +19,10 @@ int* KWayMergeSort::Sort(int* i_IntArray, int i_Size, int i_KValue)
 			Sort(kArrays[i], sizeOfArray, i_KValue);
 		}
 
-		i_IntArray = MergeArrays(kArrays, i_KValue, i_Size);
+		resultArr = MergeArrays(kArrays, i_KValue, i_Size);
 	}
 
-	return i_IntArray;
+	return resultArr;
 }
 
 
@@ -53,7 +56,6 @@ int* KWayMergeSort::MergeArrays(int** i_Arrays, int i_AmountOfArrays, int i_Amou
 	{
 		int currentArrSize = sizeof(i_Arrays[i]) / sizeof(int);
 	}
-
 
 	return result;
 }

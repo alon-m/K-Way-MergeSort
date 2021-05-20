@@ -11,6 +11,11 @@ MinHeap::MinHeap(int i_Amount)
 	m_Container = new int[i_Amount];
 }
 
+MinHeap::~MinHeap()
+{
+	delete[] m_Container;
+}
+
 int MinHeap::Count() const
 {
 	return m_ElementCount;
@@ -168,6 +173,7 @@ void MinHeap::fixHeapDown()
 		{
 			break;
 		}
+
 		swap(index, smallerChildIndex);
 
 		index = smallerChildIndex;

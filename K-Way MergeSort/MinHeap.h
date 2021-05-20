@@ -7,11 +7,8 @@ public:
 
 	explicit MinHeap(int i_Amount = 1);
 
-	~MinHeap()
-	{
-		delete[] m_Container;
-	}
-
+	~MinHeap();
+	
 	int Count() const;
 
 	int Capacity() const;

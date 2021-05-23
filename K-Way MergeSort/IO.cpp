@@ -1,18 +1,35 @@
 #include "IO.h"
 
+int IO::GetPositiveNumberFromConsole(const char* i_Msg)
+{
+	int result;
+	bool isInputValid = false;
+	string inputStr;
+
+	while (!isInputValid)
+	{
+		inputStr = GetStringInput(i_Msg);
+		isInputValid = all_of(inputStr.begin(), inputStr.end(), isdigit) && inputStr.length() <= 9;
+	}
+
+	result = stoi(inputStr);
+
+	return result;
+}
+
 int IO::GetIntInputFromConsole(const char* i_Msg)
 {
 	int result;
 	bool isInputValid = false;
+	string inputStr;
+
 	while (!isInputValid)
 	{
-		string inputStr = GetStringInput(i_Msg);
-
-		isInputValid = all_of(inputStr.begin(), inputStr.end(), isdigit) &&
-			inputStr.length() <= 9;
-
-		result = stoi(inputStr);
+		inputStr = GetStringInput(i_Msg);
+		isInputValid = CheckIfStringIsNumber(inputStr);
 	}
+
+	result = stoi(inputStr);
 
 	return result;
 }
@@ -22,8 +39,7 @@ int IO::GetIntInputFromFile(fstream& i_InputFile)
 	string inputStr;
 
 	i_InputFile >> inputStr;
-	bool isInputValid = all_of(inputStr.begin(), inputStr.end(), isdigit) &&
-		inputStr.length() <= 9;
+	bool isInputValid = CheckIfStringIsNumber(inputStr);
 
 	if (!isInputValid)
 	{
@@ -142,4 +158,32 @@ void IO::PrintArrayToFile(int i_Arr[], int i_Size, string& i_OutputFileName)
 	}
 
 
+}
+
+bool IO::CheckIfStringIsNumber(string& i_str)
+{
+	bool result = true;
+
+	if (i_str.length() <= 9)
+	{
+		for (int i = 0; i < i_str.length(); i++)
+		{
+			if (i != 0 && i_str[i] == '-')
+			{
+				result = false;
+				break;
+			}
+			else if (!isdigit(i_str[i]))
+			{
+				result = false;
+				break;
+			}
+		}
+	}
+	else
+	{
+		result = false;
+	}
+
+	return result;
 }

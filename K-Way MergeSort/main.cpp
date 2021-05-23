@@ -4,13 +4,10 @@ void main()
 {
 	try
 	{
-		int arraySize = IO::GetIntInputFromConsole("Enter amount of numbers: ");
-		int kValue = IO::GetIntInputFromConsole("Enter your k value: ");
-		string inputFilePath = IO::GetStringInput("Enter input file name: ");
-		string outputFilePath = IO::GetStringInput("Enter output file name: ");
-		int* intArray = IO::GetArrayOfIntegersFromFile(inputFilePath, arraySize);
-		int* resultArray = KWayMergeSort::Sort(intArray, arraySize, kValue);
-		IO::PrintArrayToFile(resultArray, arraySize, outputFilePath);
+		string input = "Test/input_file_1.txt";
+		string output = "Test/Output_file_1.txt";
+		RunTest(5, 2, input, output);
+		//Run();
 	}
 	catch (const invalid_argument& e)
 	{
@@ -23,18 +20,22 @@ void main()
 	}
 }
 
-int* CreateTestCase()
+void Run()
 {
-	//{ 1, 6, -2, 3, 15, 4, 8 };
-	int* testArr = new int[7];
+	int arraySize = IO::GetIntInputFromConsole("Enter amount of numbers: ");
+	int kValue = IO::GetIntInputFromConsole("Enter your k value: ");
+	string inputFilePath = IO::GetStringInput("Enter input file name: ");
+	string outputFilePath = IO::GetStringInput("Enter output file name: ");
+	int* intArray = IO::GetArrayOfIntegersFromFile(inputFilePath, arraySize);
+	int* resultArray = KWayMergeSort::Sort(intArray, arraySize, kValue);
+	IO::PrintArrayToFile(resultArray, arraySize, outputFilePath);
+}
 
-	testArr[0] = 1;
-	testArr[1] = 6;
-	testArr[2] = -2;
-	testArr[3] = 3;
-	testArr[4] = 15;
-	testArr[5] = 4;
-	testArr[6] = 8;
 
-	return testArr;
+
+void RunTest(int i_ArrSize, int i_Kvalue, string& i_InputFile, string& i_OutputFile)
+{
+	int* intArray = IO::GetArrayOfIntegersFromFile(i_InputFile, i_ArrSize);
+	int* resultArray = KWayMergeSort::Sort(intArray, i_ArrSize, i_Kvalue);
+	IO::PrintArrayToFile(resultArray, i_ArrSize, i_OutputFile);
 }

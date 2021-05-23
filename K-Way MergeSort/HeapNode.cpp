@@ -60,7 +60,7 @@ void HeapNode::SetIndex(int i_Index)
 	m_IndexInArr = i_Index;
 }
 
-void HeapNode::SetNumbersLeft(int i_NumbersLeft)
+void HeapNode::DecrementElements()
 {
-	m_ElementsLeftInArr = i_NumbersLeft;
+	m_ElementsLeftInArr--;
 }

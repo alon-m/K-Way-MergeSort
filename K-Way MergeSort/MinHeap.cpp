@@ -44,18 +44,27 @@ int MinHeap::DeleteMin()
 	{
 		throw std::length_error("Heap is empty");
 	}
-	int ItemToReturn = m_Container[0].Value();
+
+	int itemToReturn = m_Container[0].Value();
 	m_ElementCount--;
-	if (m_Container->ElementsLeftInArray() == 0)
-		m_Container[0] = m_Container[m_ElementCount - 1];
+
+	if (m_Container[0].ElementsLeftInArray() == 0)
+	{
+		m_Container[0] = m_Container[Count() - 1];
+	}
 	else
 	{
-		m_Container[0].SetValue(m_Container[0].GetArrayInIndex(m_Container[0].IndexInArray() + 1));
-		m_Container[0].SetIndex(m_Container[0].IndexInArray() + 1);
-		m_Container[0].SetNumbersLeft(m_Container[0].ElementsLeftInArray() - 1);
+		int nextIndex = m_Container[0].IndexInArray() + 1;
+		int nextValue = m_Container[0].GetArrayInIndex(nextIndex);
+
+		m_Container[0].SetValue(nextValue);
+		m_Container[0].SetIndex(nextIndex);
+		m_Container[0].DecrementElements();
 	}
+
 	fixHeapDown();
-	return ItemToReturn;
+
+	return itemToReturn;
 	
 }
 
@@ -64,6 +73,8 @@ void MinHeap::Insert(int i_NodeValue, int* i_NodeParentArray, int i_ValueIndexIn
 	HeapNode toAdd(i_NodeValue, i_NodeParentArray, i_ValueIndexInArray, i_NumbersLeft);
 	resize();
 	m_Container[Count()] = toAdd;
+	m_ElementCount++;
+
 	fixHeapUp();
 }
 

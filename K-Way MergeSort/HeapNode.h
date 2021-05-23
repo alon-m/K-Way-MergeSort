@@ -18,7 +18,7 @@ public:
 
 	void SetValue(int i_Number);
 	void SetIndex(int i_Index);
-	void SetNumbersLeft(int i_NumbersLeft);
+	void DecrementElements();
 
 private:
 

@@ -10,6 +10,8 @@ class IO
 {
 public:
 
+	static int GetPositiveNumberFromConsole(const char* i_Msg);
+
 	static int GetIntInputFromConsole(const char* i_Msg);
 	
 	static int GetIntInputFromFile(fstream& i_InputFile);
@@ -25,5 +27,7 @@ public:
 	static void PrintArrayToConsole(int i_Arr[], int i_Size);
 	
 	static void PrintArrayToFile(int i_Arr[], int i_Size, string& i_OutputFileName);
+
+	static bool CheckIfStringIsNumber(string& i_str);
 
 };

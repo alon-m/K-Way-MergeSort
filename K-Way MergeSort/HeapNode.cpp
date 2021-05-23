@@ -21,25 +21,9 @@ HeapNode::HeapNode(const HeapNode& other)
 	m_BelongsToArr = other.m_BelongsToArr;
 }
 
-//void HeapNode::SetNumber(int i_Number)
-//{
-//	m_Value = i_Number;
-//}
-//
-//void HeapNode::SetRelevant(int i_Relevant)
-//{
-//	m_BelongsToArr = i_Relevant;
-//}
-//
-//void HeapNode::SetIndex(int i_Index)
-//{
-//	m_IndexInArr = i_Index;
-//}
-//
-//void HeapNode::SetNumbersLeft(int i_NumbersLeft)
-//{
-//	m_ElementsLeftInArr = i_NumbersLeft;
-//}
+
+
+
 
 
 const int HeapNode::Value() const
@@ -57,7 +41,26 @@ const int HeapNode::IndexInArray() const
 	return m_IndexInArr;
 }
 
+const int HeapNode::GetArrayInIndex(int i_Index) const
+{
+	return m_BelongsToArr[i_Index];
+}
+
 const int HeapNode::ElementsLeftInArray() const
 {
 	return m_ElementsLeftInArr;
+}
+
+void HeapNode::SetValue(int i_Number)
+{
+	m_Value = i_Number;
+}
+void HeapNode::SetIndex(int i_Index)
+{
+	m_IndexInArr = i_Index;
+}
+
+void HeapNode::SetNumbersLeft(int i_NumbersLeft)
+{
+	m_ElementsLeftInArr = i_NumbersLeft;
 }

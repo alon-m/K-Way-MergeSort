@@ -44,13 +44,19 @@ int MinHeap::DeleteMin()
 	{
 		throw std::length_error("Heap is empty");
 	}
-
-	int itemToReturn = m_Container[0].Value();
-	m_Container[0] = m_Container[m_ElementCount - 1];
+	int ItemToReturn = m_Container[0].Value();
 	m_ElementCount--;
+	if (m_Container->ElementsLeftInArray() == 0)
+		m_Container[0] = m_Container[m_ElementCount - 1];
+	else
+	{
+		m_Container[0].SetValue(m_Container[0].GetArrayInIndex(m_Container[0].IndexInArray() + 1));
+		m_Container[0].SetIndex(m_Container[0].IndexInArray() + 1);
+		m_Container[0].SetNumbersLeft(m_Container[0].ElementsLeftInArray() - 1);
+	}
 	fixHeapDown();
-
-	return itemToReturn;
+	return ItemToReturn;
+	
 }
 
 void MinHeap::Insert(int i_NodeValue, int* i_NodeParentArray, int i_ValueIndexInArray, int i_NumbersLeft)

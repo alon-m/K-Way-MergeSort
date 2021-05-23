@@ -13,13 +13,12 @@ public:
 	/*const int* ParentArray() const;*/
 
 	const int IndexInArray() const;
-
+	const int GetArrayInIndex(int i_Index ) const;
 	const int ElementsLeftInArray() const;
 
-	/*void SetNumber(int i_Number);
-	void SetRelevant(int i_Relevant);
+	void SetValue(int i_Number);
 	void SetIndex(int i_Index);
-	void SetNumbersLeft(int i_NumbersLeft);*/
+	void SetNumbersLeft(int i_NumbersLeft);
 
 private:
 

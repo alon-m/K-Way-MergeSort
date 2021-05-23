@@ -4,10 +4,10 @@ void main()
 {
 	try
 	{
-		int arraySize = IO::GetIntInputFromConsole("Enter amount of numbers");
-		int kValue = IO::GetIntInputFromConsole("Enter your k value");
-		string inputFilePath = IO::GetStringInput("Enter input file name");
-		string outputFilePath = IO::GetStringInput("Enter output file name");
+		int arraySize = IO::GetIntInputFromConsole("Enter amount of numbers: ");
+		int kValue = IO::GetIntInputFromConsole("Enter your k value: ");
+		string inputFilePath = IO::GetStringInput("Enter input file name: ");
+		string outputFilePath = IO::GetStringInput("Enter output file name: ");
 		int* intArray = IO::GetArrayOfIntegersFromFile(inputFilePath, arraySize);
 		int* resultArray = KWayMergeSort::Sort(intArray, arraySize, kValue);
 		IO::PrintArrayToFile(resultArray, arraySize, outputFilePath);

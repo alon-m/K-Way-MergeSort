@@ -1,5 +1,6 @@
 #pragma once
 #include "QuickSort.h"
+#include "MinHeap.h"
 
 class KWayMergeSort
 {
@@ -21,7 +22,7 @@ public:
 
 	static int** SplitArrToKArrays(int* i_IntArray, int i_Size, int i_KValue);
 	
-	static int* MergeArrays(int** i_Arrays, int i_AmountOfArrays, int i_AmountOfItems);
+	static int* MergeArrays(MinHeap i_MinHeap, int i_Size);
 	
 };
 

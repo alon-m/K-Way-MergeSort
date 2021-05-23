@@ -1,4 +1,6 @@
 #include "MinHeap.h"
+class HeapNode;
+
 
 /*
  * Public Methods
@@ -8,7 +10,7 @@ MinHeap::MinHeap(int i_Amount)
 {
 	m_ElementCount = 0;
 	m_ContainerCapacity = i_Amount;
-	m_Container = new int[i_Amount];
+	m_Container = new HeapNode[i_Amount];
 }
 
 MinHeap::~MinHeap()
@@ -33,7 +35,7 @@ int MinHeap::Min() const
 		throw std::length_error("Heap is empty");
 	}
 
-	return m_Container[0];
+	return m_Container[0].Value();
 }
 
 int MinHeap::DeleteMin()
@@ -43,7 +45,7 @@ int MinHeap::DeleteMin()
 		throw std::length_error("Heap is empty");
 	}
 
-	int itemToReturn = m_Container[0];
+	int itemToReturn = m_Container[0].Value();
 	m_Container[0] = m_Container[m_ElementCount - 1];
 	m_ElementCount--;
 	fixHeapDown();
@@ -51,10 +53,11 @@ int MinHeap::DeleteMin()
 	return itemToReturn;
 }
 
-void MinHeap::Insert(int i_ItemToAdd)
+void MinHeap::Insert(int i_NodeValue, int* i_NodeParentArray, int i_ValueIndexInArray, int i_NumbersLeft)
 {
+	HeapNode toAdd(i_NodeValue, i_NodeParentArray, i_ValueIndexInArray, i_NumbersLeft);
 	resize();
-	m_Container[Count()] = i_ItemToAdd;
+	m_Container[Count()] = toAdd;
 	fixHeapUp();
 }
 
@@ -69,7 +72,7 @@ void MinHeap::BuildHeap(int* i_Arr, int i_Size)
 	{
 		for (int i = 0; i < i_Size; i++)
 		{
-			Insert(i_Arr[i]);
+			//Insert(i_Arr[i]);
 		}
 	}
 	else
@@ -114,22 +117,22 @@ bool MinHeap::hasParent(int i_ChildIndex) const
 
 int MinHeap::getLeftChild(int i_ParentIndex) const
 {
-	return m_Container[getLeftChildIndex(i_ParentIndex)];
+	return m_Container[getLeftChildIndex(i_ParentIndex)].Value();
 }
 
 int MinHeap::getRightChild(int i_ParentIndex) const
 {
-	return m_Container[getRightChildIndex(i_ParentIndex)];
+	return m_Container[getRightChildIndex(i_ParentIndex)].Value();
 }
 
 int MinHeap::getParent(int i_ChildIndex) const
 {
-	return m_Container[getParentIndex(i_ChildIndex)];
+	return m_Container[getParentIndex(i_ChildIndex)].Value();
 }
 
 void MinHeap::swap(int i_Index1, int i_Index2)
 {
-	int temp = m_Container[i_Index1];
+	HeapNode temp = m_Container[i_Index1];
 	m_Container[i_Index1] = m_Container[i_Index2];
 	m_Container[i_Index2] = temp;
 }
@@ -138,13 +141,13 @@ void MinHeap::resize()
 {
 	if (Count() == Capacity())
 	{
-		m_Container = copyContainerAndDoubleCapacity();
+		copyContainerAndDoubleCapacity();
 	}
 }
 
-int* MinHeap::copyContainerAndDoubleCapacity()
+void MinHeap::copyContainerAndDoubleCapacity()
 {
-	int* result = new int[m_ContainerCapacity * 2];
+	HeapNode* result = new HeapNode[m_ContainerCapacity * 2];
 
 	for (int i = 0; i < m_ContainerCapacity; i++)
 	{
@@ -153,7 +156,9 @@ int* MinHeap::copyContainerAndDoubleCapacity()
 
 	m_ContainerCapacity *= 2;
 
-	return result;
+	delete[] m_Container;
+
+	m_Container = result;
 }
 
 void MinHeap::fixHeapDown()
@@ -169,7 +174,7 @@ void MinHeap::fixHeapDown()
 			smallerChildIndex = getRightChildIndex(index);
 		}
 
-		if (m_Container[index] < m_Container[smallerChildIndex])
+		if (m_Container[index].Value() < m_Container[smallerChildIndex].Value())
 		{
 			break;
 		}
@@ -184,7 +189,7 @@ void MinHeap::fixHeapUp()
 {
 	int index = Count() - 1;
 
-	while (hasParent(index) && getParent(index) > m_Container[index])
+	while (hasParent(index) && getParent(index) > m_Container[index].Value())
 	{
 		swap(getParentIndex(index), index);
 		index = getParentIndex(index);

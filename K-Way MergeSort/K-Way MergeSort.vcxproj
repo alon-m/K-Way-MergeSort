@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HeapNode.cpp" />
     <ClCompile Include="MinHeap.cpp" />
     <ClCompile Include="IO.cpp" />
     <ClCompile Include="KWayMergeSort.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="QuickSort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HeapNode.h" />
     <ClInclude Include="MinHeap.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="KWayMergeSort.h" />

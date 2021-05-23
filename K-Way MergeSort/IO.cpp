@@ -8,7 +8,7 @@ int IO::GetIntInputFromConsole(const char* i_Msg)
 	{
 		string inputStr = GetStringInput(i_Msg);
 
-		isInputValid = (inputStr.begin(), inputStr.end(), !isdigit) &&
+		isInputValid = all_of(inputStr.begin(), inputStr.end(), isdigit) &&
 			inputStr.length() <= 9;
 
 		result = stoi(inputStr);
@@ -22,7 +22,7 @@ int IO::GetIntInputFromFile(fstream& i_InputFile)
 	string inputStr;
 
 	i_InputFile >> inputStr;
-	bool isInputValid = (inputStr.begin(), inputStr.end(), !isdigit) &&
+	bool isInputValid = all_of(inputStr.begin(), inputStr.end(), isdigit) &&
 		inputStr.length() <= 9;
 
 	if (!isInputValid)

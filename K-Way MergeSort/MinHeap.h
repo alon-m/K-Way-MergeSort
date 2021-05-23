@@ -1,5 +1,6 @@
 #pragma once
 #include <stdexcept>
+#include "HeapNode.h"
 
 class MinHeap
 {
@@ -8,7 +9,7 @@ public:
 	explicit MinHeap(int i_Amount = 1);
 
 	~MinHeap();
-	
+
 	int Count() const;
 
 	int Capacity() const;
@@ -17,18 +18,18 @@ public:
 
 	int DeleteMin();
 
-	void Insert(int i_ItemToAdd);
+	void Insert(int i_Number, int* i_Relevant, int i_Index, int i_NumbersLeft);
 
 	bool IsEmpty() const;
 
 	void BuildHeap(int* i_Arr, int i_Size);
-	
+
 
 private:
 
 	int m_ContainerCapacity;
 	int m_ElementCount;
-	int* m_Container;
+	HeapNode* m_Container;
 
 	int getLeftChildIndex(int i_ParentIndex) const;
 
@@ -41,7 +42,7 @@ private:
 	bool hasRightChild(int i_ParentIndex) const;
 
 	bool hasParent(int i_ChildIndex) const;
-	
+
 	int getLeftChild(int i_ParentIndex) const;
 
 	int getRightChild(int i_ParentIndex) const;
@@ -52,10 +53,10 @@ private:
 
 	void resize();
 
-	int* copyContainerAndDoubleCapacity();
+	void copyContainerAndDoubleCapacity();
 
 	void fixHeapDown();
 
 	void fixHeapUp();
-	
+
 };

@@ -5,8 +5,8 @@ void main()
 	try
 	{
 		string input = "Test/input_file_1.txt";
-		string output = "Test/Output_file_1.txt";
-		RunTest(5, 2, input, output);
+		string output = "Test/TestOutput_file_1.txt";
+		RunTest(10,4, input, output);
 		//Run();
 	}
 	catch (const invalid_argument& e)
@@ -37,5 +37,8 @@ void RunTest(int i_ArrSize, int i_Kvalue, string& i_InputFile, string& i_OutputF
 {
 	int* intArray = IO::GetArrayOfIntegersFromFile(i_InputFile, i_ArrSize);
 	int* resultArray = KWayMergeSort::Sort(intArray, i_ArrSize, i_Kvalue);
+	cout << endl;
+	for (int i = 0; i < i_ArrSize; i++)
+		cout << resultArray[i] << " ";
 	IO::PrintArrayToFile(resultArray, i_ArrSize, i_OutputFile);
 }

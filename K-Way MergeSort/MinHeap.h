@@ -22,8 +22,7 @@ public:
 
 	bool IsEmpty() const;
 
-	void BuildHeap(int* i_Arr, int i_Size);
-
+	void Print();
 
 private:
 

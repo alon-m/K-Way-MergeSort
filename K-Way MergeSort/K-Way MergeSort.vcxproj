@@ -151,7 +151,6 @@
     <ClInclude Include="MinHeap.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="KWayMergeSort.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="QuickSort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

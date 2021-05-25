@@ -1,5 +1,7 @@
 #include "MinHeap.h"
+#include <iostream>
 class HeapNode;
+using namespace std;
 
 
 /*
@@ -46,17 +48,17 @@ int MinHeap::DeleteMin()
 	}
 
 	int itemToReturn = m_Container[0].Value();
-	m_ElementCount--;
 
 	if (m_Container[0].ElementsLeftInArray() == 0)
 	{
 		m_Container[0] = m_Container[Count() - 1];
+		m_ElementCount--;
 	}
 	else
 	{
-		int nextIndex = m_Container[0].IndexInArray() + 1;
+		
+		int nextIndex = m_Container[0].IndexInArray()+1;
 		int nextValue = m_Container[0].GetArrayInIndex(nextIndex);
-
 		m_Container[0].SetValue(nextValue);
 		m_Container[0].SetIndex(nextIndex);
 		m_Container[0].DecrementElements();
@@ -83,20 +85,12 @@ bool MinHeap::IsEmpty() const
 	return Count() == 0;
 }
 
-void MinHeap::BuildHeap(int* i_Arr, int i_Size)
+void MinHeap::Print()
 {
-	if (i_Arr)
-	{
-		for (int i = 0; i < i_Size; i++)
-		{
-			//Insert(i_Arr[i]);
-		}
-	}
-	else
-	{
-		throw std::exception("input array pointer is null");
-	}
+	for (int i = 0; i < m_ElementCount; i++)
+		cout << m_Container[i].Value() << " ";
 }
+
 
 /*
  * Private Methods
@@ -204,8 +198,9 @@ void MinHeap::fixHeapDown()
 
 void MinHeap::fixHeapUp()
 {
-	int index = Count() - 1;
-
+	int index = Count()-1;
+	int Fatherval = getParent(index);
+	int myval = m_Container[index].Value();
 	while (hasParent(index) && getParent(index) > m_Container[index].Value())
 	{
 		swap(getParentIndex(index), index);

@@ -21,20 +21,10 @@ HeapNode::HeapNode(const HeapNode& other)
 	m_BelongsToArr = other.m_BelongsToArr;
 }
 
-
-
-
-
-
 const int HeapNode::Value() const
 {
 	return m_BelongsToArr[IndexInArray()];
 }
-
-//const int* HeapNode::ParentArray() const
-//{
-//	return m_BelongsToArr;
-//}
 
 const int HeapNode::IndexInArray() const
 {
@@ -55,6 +45,7 @@ void HeapNode::SetValue(int i_Number)
 {
 	m_Value = i_Number;
 }
+
 void HeapNode::SetIndex(int i_Index)
 {
 	m_IndexInArr = i_Index;

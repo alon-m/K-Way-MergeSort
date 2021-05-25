@@ -2,52 +2,67 @@
 #include <iostream>
 using namespace std;
 
-
 int* KWayMergeSort::Sort(int* i_IntArray, int i_Size, int i_KValue)
 {
-	int* resultArr = new int[i_Size];
+	int* resultArr = nullptr;
 
 	if (i_Size <= i_KValue)
 	{
-		QuickSort::QSort(i_IntArray, 0, i_Size - 1);
-		return i_IntArray;
+		QuickSort::Sort(i_IntArray, 0, i_Size - 1);
+		resultArr = i_IntArray;
 	}
 	else
 	{
- 		int* sizesArr =CreateSizesArr(i_Size, i_KValue);
+ 		int* sizesArr = CreateSizesArr(i_Size, i_KValue);
 		int** kArrays = SplitArrToKArrays(i_IntArray, i_Size, i_KValue, sizesArr);
+
 		for (int i = 0; i < i_KValue; i++)
 		{
-			kArrays[i]=Sort(kArrays[i], sizesArr[i], i_KValue);
+			kArrays[i] = Sort(kArrays[i], sizesArr[i], i_KValue);
 		}
-		return MergeArrays(kArrays, i_Size, i_KValue,sizesArr);
+
+		resultArr = MergeArrays(kArrays, i_Size, i_KValue, sizesArr);
+
+		for (int i = 0; i < i_KValue; i++)
+		{
+			delete[] kArrays[i];
+		}
+
+		delete[] kArrays;
+		delete[] sizesArr;
 	}
+
+
 	return resultArr;
 }
 
 
 
-int* KWayMergeSort::CreateSizesArr(int i_BigArrSize, int i_KValue)
+int* KWayMergeSort::CreateSizesArr(int i_ArrSize, int i_KValue)
 {
-	int NumOfSubArrays = i_KValue;
-	int NumOfElements = i_BigArrSize;
-	int* SizesArr = new int[i_KValue];
+	int numOfSubArrays = i_KValue;
+	int numOfElements = i_ArrSize;
+	int* sizesArr = new int[i_KValue];
+
 	for (int i = 0; i < i_KValue; i++)
 	{
-		SizesArr[i] = NumOfElements / NumOfSubArrays;
-		NumOfElements -= SizesArr[i];
-		NumOfSubArrays--;
+		sizesArr[i] = numOfElements / numOfSubArrays;
+		numOfElements -= sizesArr[i];
+		numOfSubArrays--;
 	}
-	return SizesArr;
+
+	return sizesArr;
 }
 
 int** KWayMergeSort::SplitArrToKArrays(int* i_IntArray, int i_Size, int i_KValue, int* i_SizesArr)
 {
 	int inputArrIndex = 0;
 	int** result = new int* [i_KValue];
+
 	for (int i = 0; i < i_KValue ; i++)
 	{	
 		result[i] = new int[i_SizesArr[i]];
+
 		for (int j = 0; j < i_SizesArr[i]; j++)
 		{
 			result[i][j] = i_IntArray[inputArrIndex];
@@ -58,32 +73,25 @@ int** KWayMergeSort::SplitArrToKArrays(int* i_IntArray, int i_Size, int i_KValue
 	return result;
 }
 
-int* KWayMergeSort::MergeArrays(int** kArrays,int i_Size,int i_KValue,int *sizesArr)
+int* KWayMergeSort::MergeArrays(int** i_KArrays, int i_Size, int i_KValue, int *i_SizesArr)
 {
-	for (int o = 0; o < i_KValue; o++)
+	MinHeap heap = MinHeap(i_KValue);
+	int* resultArr = new int[i_Size];
+
+	for (int i = 0; i < i_KValue; i++)
 	{
-		cout <<endl<< "ARR " << o << " :";
-		for (int w = 0; w < sizesArr[o]; w++)
-		{
-			cout << kArrays[o][w] << " ";
-		}
+		heap.Insert(i_KArrays[i][0], i_KArrays[i], 0, i_SizesArr[i] - 1);
 	}
-
-
-	MinHeap Heap = MinHeap(i_KValue);
-	for(int KIndex=0;KIndex<i_KValue;KIndex++)
-		Heap.Insert(kArrays[KIndex][0], kArrays[KIndex], 0, sizesArr[KIndex]-1);
-
 	
+	HeapToResultArr(resultArr, i_Size, heap);
 
-	int resultIndex = 0;
-	int* result = new int[i_Size];
+	return resultArr;
+}
 
-	while (resultIndex < i_Size)
+void KWayMergeSort::HeapToResultArr(int* i_ResultArr, int i_ArrSize, MinHeap& i_Heap)
+{
+	for (int i = 0; i < i_ArrSize; i++)
 	{
-		result[resultIndex] = Heap.DeleteMin();
-		resultIndex++;
+		i_ResultArr[i] = i_Heap.DeleteMin();
 	}
-
-	return result;
 }

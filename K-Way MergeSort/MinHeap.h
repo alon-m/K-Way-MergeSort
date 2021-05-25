@@ -18,7 +18,7 @@ public:
 
 	int DeleteMin();
 
-	void Insert(int i_Number, int* i_Relevant, int i_Index, int i_NumbersLeft);
+	void Insert(int i_NodeValue, int* i_NodeParentArray, int i_ValueIndexInArray, int i_NumbersLeft);
 
 	bool IsEmpty() const;
 

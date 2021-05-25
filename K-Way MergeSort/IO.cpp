@@ -2,17 +2,21 @@
 
 int IO::GetPositiveNumberFromConsole(const char* i_Msg)
 {
-	int result;
+	int result = 0;
 	bool isInputValid = false;
 	string inputStr;
 
 	while (!isInputValid)
 	{
 		inputStr = GetStringInput(i_Msg);
-		isInputValid = all_of(inputStr.begin(), inputStr.end(), isdigit) && inputStr.length() <= 9;
+		isInputValid = CheckIfStringIsNumber(inputStr);
+		
+		if (isInputValid)
+		{
+			result = stoi(inputStr);
+			isInputValid = result > 0;
+		}
 	}
-
-	result = stoi(inputStr);
 
 	return result;
 }
@@ -30,6 +34,28 @@ int IO::GetIntInputFromConsole(const char* i_Msg)
 	}
 
 	result = stoi(inputStr);
+
+	return result;
+}
+
+int IO::GetPositiveNumberFromFile(fstream& i_InputFile)
+{
+	string inputStr;
+	int result = 0;
+
+	i_InputFile >> inputStr;
+	bool isInputValid = CheckIfStringIsNumber(inputStr);
+
+	if (isInputValid)
+	{
+		result = stoi(inputStr);
+		isInputValid = result > 0;
+	}
+
+	if (!isInputValid)
+	{
+		throw invalid_argument("wrong input");
+	}
 
 	return result;
 }
@@ -56,9 +82,18 @@ string IO::GetStringInput(const char* i_Msg)
 	string inputStr;
 
 	PrintMsgToConsole(i_Msg);
-	cin >> inputStr;
+	std::cin >> inputStr;
 
 	return inputStr;
+}
+
+string IO::GetStringFromFile(fstream& i_InputFile)
+{
+	string result;
+
+	i_InputFile >> result;
+
+	return result;
 }
 
 int* IO::GetArrayOfIntegersFromFile(string& i_InputFileName, int i_AmountOfNumbers)
@@ -78,7 +113,7 @@ int* IO::GetArrayOfIntegersFromFile(string& i_InputFileName, int i_AmountOfNumbe
 		}
 		else
 		{
-			throw exception("file didn't open successfully");
+			throw std::invalid_argument("wrong input");
 		}
 
 		return result;
@@ -106,23 +141,23 @@ void IO::PrintMsgToFile(ofstream& i_OutputFile, const char* i_Msg)
 	}
 	else
 	{
-		throw exception("file didn't open successfully");
+		throw std::invalid_argument("wrong input");
 	}
 
 }
 
 void IO::PrintArrayToConsole(int i_Arr[], int i_Size)
 {
-	cout << "[ ";
+	std::cout << "[ ";
 	for (int i = 0; i < i_Size; i++)
 	{
-		cout << i_Arr[i];
+		std::cout << i_Arr[i];
 		if (i != i_Size - 1)
 		{
 			cout << ", ";
 		}
 	}
-	cout << " ]" << endl;
+	std::cout << " ]" << endl;
 }
 
 void IO::PrintArrayToFile(int i_Arr[], int i_Size, string& i_OutputFileName)
@@ -143,7 +178,7 @@ void IO::PrintArrayToFile(int i_Arr[], int i_Size, string& i_OutputFileName)
 		}
 		else
 		{
-			throw new exception("file didn't open successfuly");
+			throw std::invalid_argument("wrong input");
 		}
 
 		outputFile.close();
@@ -168,10 +203,13 @@ bool IO::CheckIfStringIsNumber(string& i_str)
 	{
 		for (int i = 0; i < i_str.length(); i++)
 		{
-			if (i != 0 && i_str[i] == '-')
+			if (i_str[i] == '-')
 			{
-				result = false;
-				break;
+				if (i != 0)
+				{
+					result = false;
+					break;
+				}
 			}
 			else if (!isdigit(i_str[i]))
 			{

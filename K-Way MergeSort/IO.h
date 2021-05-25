@@ -13,10 +13,14 @@ public:
 	static int GetPositiveNumberFromConsole(const char* i_Msg);
 
 	static int GetIntInputFromConsole(const char* i_Msg);
+
+	static int GetPositiveNumberFromFile(fstream& i_InputFile);
 	
 	static int GetIntInputFromFile(fstream& i_InputFile);
 
 	static string GetStringInput(const char* i_Msg);
+
+	static string GetStringFromFile(fstream& i_InputFile);
 
 	static int* GetArrayOfIntegersFromFile(string& i_InputFileName, int i_AmountOfNumbers);
 

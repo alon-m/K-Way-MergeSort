@@ -10,8 +10,6 @@ public:
 
 	const int Value() const;
 
-	/*const int* ParentArray() const;*/
-
 	const int IndexInArray() const;
 	const int GetArrayInIndex(int i_Index ) const;
 	const int ElementsLeftInArray() const;
